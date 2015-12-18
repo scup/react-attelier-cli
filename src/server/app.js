@@ -12,9 +12,8 @@ import errorHandler from 'errorhandler';
 import swig from 'swig';
 import config from './config';
 import routes from './routes';
-import ReactEngine from 'express-react-engine';
 
-let app = express();
+const app = express();
 
 // Template engine
 app.engine('html', swig.renderFile);
@@ -40,5 +39,5 @@ if (app.get('env') === 'development') {
 }
 
 app.listen(app.get('port'), () => {
-  console.log('Express server listening on port ' + app.get('port'));
+  console.log('Attelier server listening on port ' + app.get('port'));
 });
