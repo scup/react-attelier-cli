@@ -1,0 +1,21 @@
+{
+  "name": "react-attelier",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "npm run babel -- ./src/server/app.js",
+    "babel": "babel-node --stage 0"
+  },
+  "dependencies": {
+    "babel": "^5.8.21",
+    "body-parser": "^1.14.2",
+    "compression": "^1.6.0",
+    "errorhandler": "^1.4.2",
+    "express": "^4.0.0",
+    "method-override": "^2.3.5",
+    "morgan": "^1.6.1",
+    "react": "^0.14.3",
+    "react-dom": "0.14.3",
+    "static-favicon": "^1.0.2",
+    "swig": "^1.4.2"
+  }
+}
