@@ -31,7 +31,7 @@ app
   .use(logger('dev'))
   .use(bodyParser())
   .use(methodOverride())
-  .use(express.static(path.join(__dirname, 'public')))
+  .use(express.static(path.join(__dirname, '/../client')))
   .use(routes.indexRouter);
 
 if (app.get('env') === 'development') {

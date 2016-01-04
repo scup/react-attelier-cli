@@ -1,7 +1,7 @@
 module.exports = {
-  entry : './src/client/components/attelier.jsx',
+  entry : './src/client/attelier.jsx',
   output : {
-    filename : 'dist/bundle.js',
+    filename : 'dist/client/bundle.js',
     sourceFilename : '[file].map'
   },
   devtool: 'source-map',

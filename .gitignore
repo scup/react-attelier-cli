@@ -1,3 +1,4 @@
 
 .git*
-nodes_modules
+dist/*
+node_modules/*

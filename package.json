@@ -2,16 +2,20 @@
   "name": "react-attelier",
   "version": "0.0.1",
   "scripts": {
+    "start": "webpack --progress --colors --watch -d",
+    "build": "webpack --progress --colors -p",
     "dev": "npm run babel -- ./src/server/app.js",
     "babel": "babel-node --stage 0"
   },
   "dependencies": {
-    "babel": "^5.8.21",
+    "babel-core": "^5.8.25",
+    "babel-loader": "^5.3.2",
     "body-parser": "^1.14.2",
     "compression": "^1.6.0",
     "errorhandler": "^1.4.2",
     "express": "^4.0.0",
     "gulp": "^3.9.0",
+    "gulp-express": "^0.3.5",
     "method-override": "^2.3.5",
     "morgan": "^1.6.1",
     "react": "^0.14.3",
@@ -22,6 +26,8 @@
     "webpack": "^1.12.9"
   },
   "devDependencies": {
+    "gulp-babel": "^5.3.0",
+    "run-sequence": "^1.1.5",
     "stylus-loader": "^1.4.2"
   }
 }
