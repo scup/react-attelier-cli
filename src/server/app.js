@@ -15,6 +15,8 @@ import routes from './routes';
 
 const app = express();
 
+const VIEWS_DIR = path.join(__dirname, '/../client');
+
 // Template engine
 app.engine('html', swig.renderFile);
 
@@ -22,7 +24,7 @@ app.engine('html', swig.renderFile);
  * Express configuration.
  */
 app.set('port', config.server.port);
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', VIEWS_DIR);
 app.set('view engine', 'html');
 
 app
@@ -31,7 +33,7 @@ app
   .use(logger('dev'))
   .use(bodyParser())
   .use(methodOverride())
-  .use(express.static(path.join(__dirname, '/../client')))
+  .use(express.static(VIEWS_DIR))
   .use(routes.indexRouter);
 
 if (app.get('env') === 'development') {

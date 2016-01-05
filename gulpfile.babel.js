@@ -5,6 +5,7 @@ import webpackConfig from './webpack.config.js';
 import runSequence from 'run-sequence';
 import server from 'gulp-express';
 import babel from "gulp-babel";
+import htmlmin from 'gulp-htmlmin';
 
 const source = {
   src : './src',
@@ -20,13 +21,19 @@ gulp.task('webpack', function(callback) {
 });
 
 gulp.task('build:server', function(){
-  return gulp.src([`${source.src}/server/**/*.js`])
+  return gulp.src(`${source.src}/server/**/*.js`)
     .pipe(babel())
     .pipe(gulp.dest(`${source.dist}/server`));
 });
 
+gulp.task('html:minify', function() {
+  return gulp.src(`${source.src}/client/index.html`)
+    .pipe(htmlmin({collapseWhitespace: true}))
+    .pipe(gulp.dest(`${source.dist}/client`))
+});
+
 gulp.task("default", function(){
-  runSequence('webpack', ['build:server'], function(){
+  runSequence('webpack', ['build:server', 'html:minify'], function(){
     server.run([`${source.dist}/server/app.js`]);
   });
 });
