@@ -4,7 +4,6 @@
 import express from 'express';
 import path from 'path';
 import logger from 'morgan';
-import bodyParser from 'body-parser';
 import compress from 'compression';
 import favicon from 'static-favicon';
 import methodOverride from 'method-override';
@@ -31,7 +30,6 @@ app
   .use(compress())
   .use(favicon())
   .use(logger('dev'))
-  .use(bodyParser())
   .use(methodOverride())
   .use(express.static(VIEWS_DIR))
   .use(routes.indexRouter);

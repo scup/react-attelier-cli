@@ -1,0 +1,5 @@
+{
+  "name": "Preview",
+  "public": true,
+  "main": "./Preview.jsx"
+}

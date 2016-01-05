@@ -1,10 +1,20 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Router, Route, Link, browserHistory } from 'react-router';
+
+// Components
+import Dashboard from './components/dashboard';
 
 class Attelier extends React.Component {
   render(){
-    return (<div>Attelier</div>);
+    return (
+      <Dashboard />
+    );
   }
 }
 
-ReactDOM.render(<Attelier />,document.getElementById('app'))
+ReactDOM.render((
+  <Router history={browserHistory}>
+    <Route path="/" component={Attelier}></Route>
+  </Router>
+), document.getElementById('app'));

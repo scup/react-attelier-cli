@@ -1,0 +1,5 @@
+{
+  "name": "Searchbar",
+  "public": true,
+  "main": "./Searchbar.jsx"
+}

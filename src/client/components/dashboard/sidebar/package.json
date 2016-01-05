@@ -1,0 +1,5 @@
+{
+  "name": "Sidebar",
+  "public": true,
+  "main": "./Sidebar.jsx"
+}
