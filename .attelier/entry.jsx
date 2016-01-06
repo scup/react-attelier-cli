@@ -1,10 +1,16 @@
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Attelier from 'react-attelier';
+    import React from 'react';
+    import ReactDOM from 'react-dom';
 
-import Components from './component.jsx';
+    import Comp from './components.jsx';
 
-ReactDOM.render(<Attelier components={Components} />,
-  document.getElementById('app')
-);
+    class App extends React.Component {
+      render(){
+        return (
+          <Comp />
+        );
+      }
+    }
+
+    ReactDOM.render(<App/>, document.getElementById('app'));
+  

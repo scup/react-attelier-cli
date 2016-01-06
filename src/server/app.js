@@ -14,6 +14,8 @@ import routes from './routes';
 
 const app = express();
 
+console.log('process.argv', process.argv);
+
 const VIEWS_DIR = path.join(__dirname, '/../client');
 
 // Template engine

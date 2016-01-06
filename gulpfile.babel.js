@@ -1,5 +1,4 @@
 import path from 'path';
-import gulp from 'gulp';
 import gutil from 'gulp-util';
 import webpack from 'webpack';
 import WebpackDevServer from "webpack-dev-server";
@@ -9,13 +8,26 @@ import htmlmin from 'gulp-htmlmin';
 import nodemon from 'gulp-nodemon';
 import glob from 'glob';
 import AttelierService from './src/server/services/attelier.js';
+import gulpParam from 'gulp-param';
+
+const gulp = gulpParam(require('gulp'), process.argv);
 
 const source = {
-  src : './src',
-  dist: './dist'
+  src          : './src',
+  dist         : './dist',
+  componentFile: 'components.jsx'
 };
 
 const WEBPACK_CONFIG_PATH = './webpack.config.js';
+
+gulp.task('extract:components', function(path, dir){
+
+  runSequence('create:cachedir', function(){
+    let filename = `${dir}/${source.componentFile}`;
+    console.log(filename);
+  });
+  // AttelierService.createComponentFile(path, '');
+});
 
 gulp.task('webpack', function(callback) {
   // run webpack
@@ -37,7 +49,6 @@ gulp.task("webpack-dev-server", function(callback) {
     ],
   });
 
-  console.log('webpackDevServerConfig: ', webpackDevServerConfig);
   // Start a webpack-dev-server
   let compiler = webpack(webpackDevServerConfig);
 
@@ -62,17 +73,20 @@ gulp.task('html:minify', function() {
     .pipe(gulp.dest(`${source.dist}/client`))
 });
 
-gulp.task("default", function(){
-  runSequence('webpack', ['server'], function(){});
-});
-
-gulp.task("server", function(){
+gulp.task("server", [ 'extract:components' ], function(path){
   runSequence('build:server', function(){
-    nodemon({script: `${source.dist}/server/app.js`});
+    nodemon({
+      script: `${source.dist}/server/app.js`,
+      args: [`--path ${path}`]
+    });
   });
 });
 
 gulp.task("server:dev", function(){
   process.env.NODE_ENV = 'development';
   runSequence('server', ['webpack-dev-server', 'html:minify'], function(){});
+});
+
+gulp.task("default", function(){
+  runSequence('webpack', ['server'], function(){});
 });
