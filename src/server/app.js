@@ -12,7 +12,6 @@ import errorHandler from 'errorhandler';
 import swig from 'swig';
 import config from './config';
 import routes from './routes';
-import ReactEngine from 'express-react-engine';
 
 let app = express();
 
