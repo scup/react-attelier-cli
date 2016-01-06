@@ -7,6 +7,7 @@ exports.index = function(req, res) {
   res.render('index');
 };
 
+
 exports.preview = function(req, res) {
 
   let path = req.param('component');
@@ -16,7 +17,7 @@ exports.preview = function(req, res) {
     import React from 'react';
     import ReactDOM from 'react-dom';
 
-    import Comp from '${path}';
+    import Comp from './components.jsx';
 
     class App extends React.Component {
       render(){

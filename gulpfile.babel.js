@@ -7,6 +7,8 @@ import runSequence from 'run-sequence';
 import babel from 'gulp-babel';
 import htmlmin from 'gulp-htmlmin';
 import nodemon from 'gulp-nodemon';
+import glob from 'glob';
+import AttelierService from './src/server/services/attelier.js';
 
 const source = {
   src : './src',

@@ -1,16 +1,10 @@
 
-    import React from 'react';
-    import ReactDOM from 'react-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Attelier from 'react-attelier';
 
-    import Comp from '/Users/brunoagutoli/projetos/react-attelier/src/client/components/searchbar';
+import Components from './component.jsx';
 
-    class App extends React.Component {
-      render(){
-        return (
-          <Comp />
-        );
-      }
-    }
-
-    ReactDOM.render(<App/>, document.getElementById('app'));
-  
+ReactDOM.render(<Attelier components={Components} />,
+  document.getElementById('app')
+);
