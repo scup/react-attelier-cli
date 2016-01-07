@@ -1,0 +1,5 @@
+{
+  "name": "MyPackage",
+  "public": true,
+  "main": "./MyPackage.jsx"
+}

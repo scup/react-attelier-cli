@@ -9,6 +9,7 @@ import nodemon from 'gulp-nodemon';
 import glob from 'glob';
 import AttelierService from './src/server/services/attelier.js';
 import gulpParam from 'gulp-param';
+import mkdirp from 'mkdirp';
 
 const gulp = gulpParam(require('gulp'), process.argv);
 
@@ -20,23 +21,22 @@ const source = {
 
 const WEBPACK_CONFIG_PATH = './webpack.config.js';
 
-gulp.task('create:cachedir', function(){
-
-});
-
 gulp.task('extract:components', function(path, dir){
-  runSequence('create:cachedir', function(){
-    let filename = `${dir}/${source.componentFile}`;
-    console.log(filename);
+  let attelierCache = `${dir}/.attelier`;
+  mkdirp(attelierCache, function (err) {
+    if (err) return console.error(err);
+    let filename = `${attelierCache}/${source.componentFile}`;
+    AttelierService.createComponentFile(filename, path, function(){
+      console.log('All components extracted...');
+      console.log(`--> File ${filename} created!`);
+    });
   });
-  // AttelierService.createComponentFile(path, '');
 });
 
 gulp.task('webpack', function(callback) {
   // run webpack
   webpack(require(WEBPACK_CONFIG_PATH), function(err, stats) {
     if(err) throw new gutil.PluginError("webpack", err);
-    callback();
   });
 });
 

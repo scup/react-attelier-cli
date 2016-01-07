@@ -2,11 +2,13 @@ import fs from 'fs';
 import glob from 'glob';
 
 const CACHE_DIR = '.attelier';
+const PATTERN_EXT = /.js|.jsx/;
+const COMPONENT_FILE = `${CACHE_DIR}/component.jsx`;
 
 export default {
-  getComponents() {
+  getComponents(pathname) {
     return new Promise( (resolve, reject) => {
-      glob('./src/client/components/**/*.jsx', (err, files) => {
+      glob(`${pathname}/**/*.js`, (err, files) => {
         if(err) return reject(err);
         resolve(files);
       });
@@ -24,11 +26,11 @@ export default {
   },
 
   getPackageName(filename) {
-    return filename.split('/').pop().replace('.jsx', '');
+    return filename.split('/').pop().replace(PATTERN_EXT, '');
   },
 
-  createComponentFile(filename, callback ) {
-    this.getComponents().then( (files) => {
+  createComponentFile(pathname, callback ) {
+    this.getComponents(pathname).then( (files) => {
       let imports = [],
           exportsModules = [];
 
@@ -42,6 +44,8 @@ export default {
           ${exportsModules.join(',\n')}
         }
       `;
+
+      let filename = `${pathname}/${COMPONENT_FILE}`;
       this.createFile(filename, template).then( callback );
     });
     return;

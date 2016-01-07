@@ -11,6 +11,7 @@
   "bin": {
     "attelier": "./src/bin/index.js"
   },
+  "main": "./dist/server/app.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/scup/react-attelier.git"
@@ -30,6 +31,7 @@
     "history": "^1.17.0",
     "method-override": "^2.3.5",
     "minimist": "^1.2.0",
+    "mkdirp": "^0.5.1",
     "morgan": "^1.6.1",
     "react": "^0.14.3",
     "react-dom": "0.14.3",
