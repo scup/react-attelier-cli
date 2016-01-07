@@ -20,8 +20,11 @@ const source = {
 
 const WEBPACK_CONFIG_PATH = './webpack.config.js';
 
-gulp.task('extract:components', function(path, dir){
+gulp.task('create:cachedir', function(){
 
+});
+
+gulp.task('extract:components', function(path, dir){
   runSequence('create:cachedir', function(){
     let filename = `${dir}/${source.componentFile}`;
     console.log(filename);
