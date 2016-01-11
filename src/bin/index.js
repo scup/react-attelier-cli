@@ -28,7 +28,7 @@ program
   .parse(process.argv);
 
 var dir = process.cwd();
-var path = resolve(dir, program.path || 'src/components');
+var path = program.path || 'src/components';
 if (!exists(path)) { throw('Could not find ' + path + ' folder'); }
 
 // extract all components

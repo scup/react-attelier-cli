@@ -22,15 +22,10 @@ const source = {
 const WEBPACK_CONFIG_PATH = './webpack.config.js';
 
 gulp.task('extract:components', function(path, dir){
-  let attelierCache = `${dir}/.attelier`;
-  mkdirp(attelierCache, function (err) {
-    if (err) return console.error(err);
-    let filename = `${attelierCache}/${source.componentFile}`;
-    AttelierService.createComponentFile(filename, path, function(){
-      console.log('All components extracted...');
-      console.log(`--> File ${filename} created!`);
-    });
-  });
+  AttelierService.createExportFileComponents(dir, path, function(){
+    console.log('All components extracted...');
+    console.log(`--> File ${filename} created!`);
+  });  
 });
 
 gulp.task('webpack', function(callback) {

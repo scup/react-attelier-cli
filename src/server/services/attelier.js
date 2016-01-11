@@ -1,53 +1,61 @@
 import fs from 'fs';
 import glob from 'glob';
+import path from 'path';
+import mkdirp from 'mkdirp';
 
-const CACHE_DIR = '.attelier';
-const PATTERN_EXT = /.js|.jsx/;
-const COMPONENT_FILE = `${CACHE_DIR}/component.jsx`;
+const TEMP_DIR = '.attelier/';
+const TEMP_FILE = 'components.jsx';
 
 export default {
-  getComponents(pathname) {
-    return new Promise( (resolve, reject) => {
-      glob(`${pathname}/**/*.js`, (err, files) => {
-        if(err) return reject(err);
+
+  getComponentsPaths(path) {
+    return new Promise((resolve, reject) => {
+      glob(path, (err, files) => {
+        if (err) return reject(err);
         resolve(files);
       });
     });
-    return;
   },
 
-  createFile(filename, content) {
-    return new Promise( (resolve, reject) => {
-      fs.writeFile(filename, content, (err) => {
-        if (err) return reject();
-        resolve();
+  createFile(rootPath, template) {
+    return new Promise((resolve, reject) => {
+      let dirPath = path.join(rootPath, TEMP_DIR);      
+      mkdirp(dirPath, err => {
+        if (err) return reject(false);
+        let filePath = path.join(dirPath, TEMP_FILE);
+        fs.writeFile(filePath, template, err => {
+          if (err) return reject(false);
+          resolve(true);
+        });
       });
     });
   },
 
-  getPackageName(filename) {
-    return filename.split('/').pop().replace(PATTERN_EXT, '');
+  getComponentsFileTemplate(componentsPaths) {
+    let imports = [];
+    let attributes = [];
+
+    componentsPaths.forEach((componentPath) => {
+      let componentName = componentPath.split('/').pop().replace('.jsx', '');
+      imports.push(`import ${componentName} from "${componentPath}";`);
+      attributes.push(componentName);
+    });
+
+    return `
+      ${imports.join('\n')}
+      export default {
+        ${attributes.join(',\n')}
+      };
+    `;
   },
 
-  createComponentFile(pathname, callback ) {
-    this.getComponents(pathname).then( (files) => {
-      let imports = [],
-          exportsModules = [];
-
-      files.forEach( ( file ) => {
-        let packageName = this.getPackageName(file);
-        imports.push(`import ${packageName} from "${file}";`);
-        exportsModules.push(`${packageName}`);
+  createExportFileComponents(rootPath, componentsPath, callback) {
+    let componentsDirectoryPath = path.join(rootPath, componentsPath, './**/*.jsx');
+    this.getComponentsPaths(componentsDirectoryPath).then(paths => {
+      let template = this.getComponentsFileTemplate(paths);
+      this.createFile(rootPath, template).then(() => {
+        return callback && callback();
       });
-
-      let template = `${imports.join('\n')} export default {
-          ${exportsModules.join(',\n')}
-        }
-      `;
-
-      let filename = `${pathname}/${COMPONENT_FILE}`;
-      this.createFile(filename, template).then( callback );
     });
-    return;
   }
 };
